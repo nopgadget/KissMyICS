@@ -135,15 +135,17 @@ class BACnetAPDU:
         service_choice = 0x0C  # ReadProperty
         
         # Create APDU with proper BACnet encoding
-        # For ReadProperty, we don't need invoke ID in the header
-        apdu = struct.pack('!BB', apdu_type, service_choice)
+        # All confirmed requests need an invoke ID
+        apdu = struct.pack('!BBB', apdu_type, service_choice, 0x01)  # Invoke ID
         
-        # Object identifier (device,1) - use application tag 0x0C
-        apdu += struct.pack('!B', 0x0C)  # Application tag for object identifier
+        # Object identifier (device,1) - use context tag 0 for ReadProperty
+        apdu += struct.pack('!B', 0x00)  # Context tag 0 for object identifier
+        apdu += struct.pack('!B', 0x04)  # Length (4 bytes)
         apdu += struct.pack('!HH', object_type, object_id)  # Object type and instance
         
-        # Property identifier - use application tag 0x19
-        apdu += struct.pack('!B', 0x19)  # Application tag for property identifier
+        # Property identifier - use context tag 1 for ReadProperty
+        apdu += struct.pack('!B', 0x01)  # Context tag 1 for property identifier
+        apdu += struct.pack('!B', 0x02)  # Length (2 bytes)
         apdu += struct.pack('!H', property_id)  # Property identifier value
         
         # Array index (optional)
@@ -848,7 +850,7 @@ class BACnetClient:
             print(f"Object {obj_type},{obj_inst} {status}")
             await asyncio.sleep(1)
             return True
-            
+                
         except Exception as e:
             print(f"Error setting out of service: {e}")
             return False
