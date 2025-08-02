@@ -1,1 +1,2 @@
 pymodbus[serial]>=3.5.0
+opcua>=0.98.0
