@@ -499,4 +499,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - [python-opcua Documentation](https://python-opcua.readthedocs.io/en/latest/client.html)
 - [OPC Foundation](https://opcfoundation.org/)
-- [OPC-UA Specification](https://opcfoundation.org/developer-tools/specifications-unified-architecture) 
+- [OPC-UA Specification](https://opcfoundation.org/developer-tools/specifications-unified-architecture)
+- [OPC-UA Exploit Framework](https://github.com/claroty/opcua-exploit-framework) - Security testing and exploitation framework for OPC-UA 
